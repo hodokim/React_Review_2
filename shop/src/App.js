@@ -5,6 +5,7 @@ import { useState } from 'react';
 import data from './data.js'
 import {Route, Link, Routes, useNavigate, Outlet} from 'react-router-dom'
 import DetailBox from './routes/Detail';
+import axios from 'axios';
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
       </Navbar>   
 
       <Routes>
-        <Route path="/" element={<MainBox shoes={shoes}></MainBox>} />
+        <Route path="/" element={<MainBox shoes={shoes} ></MainBox>} />
         <Route path="/detail/:id" element={<DetailBox shoes={shoes} ></DetailBox>} />
 
         {/* Nested Route */}
@@ -46,7 +47,9 @@ function App() {
 }
 
 let MainBox = (props) => {
-  let [shoes, setShoes] = useState(props.shoes)
+  let [shoes, setShoes] = useState(props.shoes);
+  let [listCnt, setListCnt] = useState(2);
+  console.log(listCnt)
   return (     
     <>
       <div className="main-bg"></div>
@@ -72,6 +75,23 @@ let MainBox = (props) => {
             })
           }
         </div>
+        {
+          listCnt<4 ? 
+            <button onClick={() => {
+              axios.get('https://codingapple1.github.io/shop/data' + listCnt + '.json')
+                .then((result) => {
+                  console.log(props.shoes)
+                  let copy = [...props.shoes, ...result.data];
+                  setShoes(copy);
+                  setListCnt(listCnt+1);
+                })
+                .catch((error) => {
+                  console.log('에러 발생 : ' + error.message)
+                })
+            }}>더 보기</button>
+            : null
+        }
+
       </div>
     </>
   )
