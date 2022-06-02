@@ -49,12 +49,12 @@ function App() {
 let MainBox = (props) => {
   let [shoes, setShoes] = useState(props.shoes);
   let [listCnt, setListCnt] = useState(2);
-  console.log(listCnt)
+  
   return (     
     <>
       <div className="main-bg"></div>
       <div><button onClick={()=>{
-        let copy = [...props.shoes];
+        let copy = [...shoes];
         copy.sort((a,b)=>{
           if(a.title<b.title)           
             return -1;
@@ -80,8 +80,8 @@ let MainBox = (props) => {
             <button onClick={() => {
               axios.get('https://codingapple1.github.io/shop/data' + listCnt + '.json')
                 .then((result) => {
-                  console.log(props.shoes)
-                  let copy = [...props.shoes, ...result.data];
+                  console.log(shoes)
+                  let copy = [...shoes, ...result.data];
                   setShoes(copy);
                   setListCnt(listCnt+1);
                 })

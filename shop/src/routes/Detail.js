@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components'
+import { Nav } from 'react-bootstrap';
 
 let YellowBtn = styled.button`
     background : ${props => props.bg};
@@ -11,7 +12,7 @@ let YellowBtn = styled.button`
 let DetailBox = (props) => {
     let { id } = useParams();
     let [eventFlag, setEvnFlag] = useState(true);
-    let [num, setNum] = useState('');
+    let [tab, setTab] = useState(0)
 
     useEffect(()=>{
         setTimeout(()=>{setEvnFlag(false)},2000)
@@ -39,8 +40,24 @@ let DetailBox = (props) => {
                     <button className="btn btn-danger">주문하기</button>
                 </div>
             </div>
+            <Nav variant="tabs" defaultActiveKey="link0">
+                {
+                    [...Array(3).keys()].map((x)=>{
+                        return (
+                        <Nav.Item>
+                            <Nav.Link onClick={()=>{setTab(x)}} eventKey={`link${x}`}>{`버튼${x}`}</Nav.Link>
+                        </Nav.Item>
+                        )
+                    })
+                }
+            </Nav>
+            <TabContent tab={tab}></TabContent>
         </div>
     )
+}
+
+let TabContent= ({tab})=>{
+    return ([<div>내용0</div>, <div>내용1</div>, <div>내용2</div>])[tab]
 }
 
 export default DetailBox;
