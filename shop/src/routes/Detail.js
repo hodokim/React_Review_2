@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components'
 import { Nav } from 'react-bootstrap';
+import '../App.css';
 
 let YellowBtn = styled.button`
     background : ${props => props.bg};
@@ -57,7 +58,24 @@ let DetailBox = (props) => {
 }
 
 let TabContent= ({tab})=>{
-    return ([<div>내용0</div>, <div>내용1</div>, <div>내용2</div>])[tab]
+
+    let [fade, setFade] = useState('')
+
+    useEffect(()=>{
+        setTimeout(() => { setFade('end') }, 100)
+            
+        return()=>{
+            setFade('')
+        }
+    }, [tab])
+
+    return (
+        <div className={`start ${fade}`}>
+        {
+            [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]
+        }          
+        </div>       
+    )
 }
 
 export default DetailBox;

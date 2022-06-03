@@ -6,7 +6,7 @@ import data from './data.js'
 import {Route, Link, Routes, useNavigate, Outlet} from 'react-router-dom'
 import DetailBox from './routes/Detail';
 import axios from 'axios';
-
+import CartBox from './routes/Cart.js'
 
 function App() {
 
@@ -30,13 +30,15 @@ function App() {
 
       <Routes>
         <Route path="/" element={<MainBox shoes={shoes} ></MainBox>} />
-        <Route path="/detail/:id" element={<DetailBox shoes={shoes} ></DetailBox>} />
+        <Route path="/detail/:id" element={<DetailBox shoes={shoes}></DetailBox>} />
 
         {/* Nested Route */}
         <Route path="/event" element={<Event />}> 
           <Route path="first" element={<div>First 페이지</div>} />
           <Route path="second" element={<div>Second 페이지</div>} />
         </Route>
+
+        <Route path="/cart" element={<CartBox></CartBox>}/>
       </Routes>
 
 
