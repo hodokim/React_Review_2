@@ -6,7 +6,6 @@ import { setCount } from '../store'
 let Cart = ()=>{
     let cartInfo = useSelector((state)=> state.cart );
     let dispatch = useDispatch();
-
     return (
         <Table>
             <thead>
@@ -26,12 +25,16 @@ let Cart = ()=>{
                                 <td>{item.name}</td>
                                 <td>{item.count}</td>
                                 <td>
-                                    <button onClick={()=>{
-
-                                    }}>+</button>
-                                <button onClick={()=>{
-                                    dispatch(setCount())
-                                }}
+                                <button onClick={
+                                    ()=>{
+                                        dispatch(setCount({ count: 1, id: item.id }))
+                                    }
+                                }>+</button>
+                                <button onClick={
+                                    ()=>{
+                                        dispatch(setCount({ count : -1, id : item.id}))
+                                    }
+                                }
                                 >-</button></td>
                             </tr>                            
                         )

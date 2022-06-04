@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import styled from 'styled-components'
 import { Nav } from 'react-bootstrap';
 import '../App.css';
+import { useDispatch } from 'react-redux'
+import { addCart } from '../store'
+
 
 let YellowBtn = styled.button`
     background : ${props => props.bg};
@@ -14,6 +17,7 @@ let DetailBox = (props) => {
     let { id } = useParams();
     let [eventFlag, setEvnFlag] = useState(true);
     let [tab, setTab] = useState(0)
+    let dispatch = useDispatch();
 
     useEffect(()=>{
         setTimeout(()=>{setEvnFlag(false)},2000)
@@ -38,7 +42,15 @@ let DetailBox = (props) => {
                     <h4 className="pt-5">{props.shoes[id].title}</h4>
                     <p>{props.shoes[id].content}</p>
                     <p>{props.shoes[id].price}</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    <button className="btn btn-danger"
+                    onClick={()=>{
+                        dispatch(addCart({
+                            id: props.shoes[id].id,
+                            name: props.shoes[id].title,
+                            count : 1
+                        }))
+                    }}
+                    >주문하기</button>
                 </div>
             </div>
             <Nav variant="tabs" defaultActiveKey="link0">
